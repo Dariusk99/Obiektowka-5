@@ -12,3 +12,4 @@ C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\refint\Zadanie5.dll
 C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.pdb
 C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.genruntimeconfig.cache
 C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\ref\Zadanie5.dll
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.sourcelink.json

@@ -16,5 +16,18 @@ public class StudentService {
             new Student(2, "Arnold", "Boczek"),
             new Student(3, "Marian", "Paździoch")
         };
+
+        Random random = new Random();
+        GradeWeight[] weights = Enum.GetValues<GradeWeight>();
+
+        Students.ForEach(s => {
+            foreach (GradeType type in Enum.GetValues<GradeType>()) {
+                for (int i=0; i<5; i++) {
+                s.Grades.Add(
+                    new Grade(s, "OOP", $"Exercise {i}", type, weights[random.Next(weights.Length)])
+                );
+            };
+            }
+        });
     }
 }
