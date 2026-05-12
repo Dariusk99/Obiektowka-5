@@ -1,0 +1,14 @@
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.AssemblyInfoInputs.cache
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.AssemblyInfo.cs
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.csproj.CoreCompileInputs.cache
+C:\Users\Daras\Desktop\Zadanie5\bin\Debug\net10.0\Zadanie5.exe
+C:\Users\Daras\Desktop\Zadanie5\bin\Debug\net10.0\Zadanie5.deps.json
+C:\Users\Daras\Desktop\Zadanie5\bin\Debug\net10.0\Zadanie5.runtimeconfig.json
+C:\Users\Daras\Desktop\Zadanie5\bin\Debug\net10.0\Zadanie5.dll
+C:\Users\Daras\Desktop\Zadanie5\bin\Debug\net10.0\Zadanie5.pdb
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.dll
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\refint\Zadanie5.dll
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.pdb
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\Zadanie5.genruntimeconfig.cache
+C:\Users\Daras\Desktop\Zadanie5\obj\Debug\net10.0\ref\Zadanie5.dll
