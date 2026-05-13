@@ -10,6 +10,12 @@ public class StudentService {
         return this.Students;
     }
 
+    public List<Grade> GetStudentGradesByType(Student Student, GradeType Type) {
+        return Student.Grades
+            .Where(g => g.GradeType == Type)
+            .ToList();
+    }
+
     private void Setup() {
         Students = new List<Student> {
             new Student(1, "Ferdynand", "Kiepski"),
@@ -22,9 +28,9 @@ public class StudentService {
 
         Students.ForEach(s => {
             foreach (GradeType type in Enum.GetValues<GradeType>()) {
-                for (int i=0; i<5; i++) {
+                for (int i=0; i<3; i++) {
                 s.Grades.Add(
-                    new Grade(s, "OOP", $"Exercise {i}", type, weights[random.Next(weights.Length)])
+                    new Grade(s, "OOP", $"Exercise {i+1}", type, weights[random.Next(weights.Length)])
                 );
             };
             }

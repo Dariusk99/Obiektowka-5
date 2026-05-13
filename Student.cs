@@ -12,6 +12,6 @@ public class Student {
     }
 
     public override string ToString() {
-        return $"{this.Index} {this.FirstName} {this.LastName}";
+        return $"{this.FirstName} {this.LastName} ({this.Index})";
     }
 }
