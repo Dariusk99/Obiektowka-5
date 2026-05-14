@@ -1,20 +1,20 @@
 public class Grade {
 
     public Student? Student { get; private set; }
-    public string Subject { get; private set; }
-    public string Exercise { get; set; }
+    public Course Course { get; private set; }
+    public string Description { get; set; }
     public GradeType GradeType { get; set; }
     public GradeWeight GradeWeight { get; set; }
 
-    public Grade(Student Student, string Subject, string Exercise, GradeType GradeType, GradeWeight GradeWeight) {
-        this.Student = Student;
-        this.Subject = Subject;
-        this.Exercise = Exercise;
-        this.GradeType = GradeType;
-        this.GradeWeight = GradeWeight;
+    public Grade(Student student, Course course, string Description, GradeType gradeType, GradeWeight gradeWeight) {
+        Student = student;
+        Course = course;
+        Description = Description;
+        GradeType = gradeType;
+        GradeWeight = gradeWeight;
     }
 
     public override string ToString() {
-        return $"{this.Student}, {this.Subject}, {this.Exercise}, {this.GradeType}, Grade weight: {(int)this.GradeWeight}";
+        return $"{Student}, {Course}, {Exercise}, {GradeType}, Ocena: {(int)GradeWeight}";
     }
 }

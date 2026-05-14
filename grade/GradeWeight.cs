@@ -1,6 +1,6 @@
 public enum GradeWeight {
-    FAIL = 2,
-    PASS = 3,
-    GOOD = 4,
-    VERY_GOOD = 5
+    NIEDOSTATECZNY = 2,
+    DOPUSZCZAJĄCY = 3,
+    DOBRY = 4,
+    BARDZO_DOBRY = 5
 }

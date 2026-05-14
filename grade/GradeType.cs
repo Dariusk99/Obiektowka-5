@@ -1,5 +1,4 @@
 public enum GradeType {
-    LABORATORIE,
-    LECTURE,
-    EXERCISE
+    WYKŁAD,
+    ĆWICZENIA
 }

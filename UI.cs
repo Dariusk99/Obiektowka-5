@@ -5,50 +5,50 @@ public class UI {
     private bool Running;
     private readonly StudentService StudentService;
 
-    public UI() {
-        this.StudentService = new StudentService();
+    public UI(StudentService studentService) {
+        StudentService = studentService;
     }
 
     public void ShowMenu() {
-        this.Running = true;
+        Running = true;
 
         while (Running) {
             Console.Clear();
 
-            int option = PrintMenu(new [] {"Exit", "List students"});
+            int option = PrintMenu(new [] {"Wyjdź", "Lista studentów"});
             
             switch(option) {
-                case 0: this.Running = false; return;
-                case 1: this.ListStudents(); break;
+                case 0: Running = false; return;
+                case 1: ListStudents(); break;
             }
         }
     }
 
     private void ListStudents() {
         Console.Clear();
-        List<Student> Students = this.StudentService.GetAllStudents();
+        List<Student> students = StudentService.GetAllStudents();
     
         int option = PrintMenu(
-            new [] {"Back"}
-                .Concat(Students.Select(s => s.ToString())).ToArray()
+            new [] {"Wróć"}
+                .Concat(students.Select(s => s.ToString())).ToArray()
         );
 
         switch (option) {
             case 0: return;
-            default: ShowStudentInfo(Students[option-1]); break;
+            default: ShowStudentInfo(students[option-1]); break;
         }
     }
 
-    private void ShowStudentInfo(Student Student) {
+    private void ShowStudentInfo(Student student) {
         Console.Clear();
-        Console.WriteLine($"Student: {Student}");
-        Console.WriteLine($"Final grade: ");
+        Console.WriteLine($"Student: {student}");
+        Console.WriteLine($"Ocena końcowa: ");
 
         List<string> menuOptions = new List<string>();
         GradeType[] types = Enum.GetValues<GradeType>();
         
         foreach (GradeType type in types) {
-            List<Grade> grades = StudentService.GetStudentGradesByType(Student, type);
+            List<Grade> grades = StudentService.GetStudentGradesByType(student, type);
 
             StringBuilder builder = new StringBuilder();
             
@@ -62,51 +62,51 @@ public class UI {
         }
 
         int option = PrintMenu(
-            new [] {"Back"}
+            new [] {"Wróć"}
                 .Concat(menuOptions)
                 .ToArray()
         );
 
         switch (option) {
             case 0: return;
-            default: ShowGrades(Student, StudentService.GetStudentGradesByType(Student, types[option-1])); break;
+            default: ShowGrades(student, StudentService.GetStudentGradesByType(student, types[option-1])); break;
         }
     }
 
-    private void ShowGrades(Student Student, List<Grade> Grades) {
+    private void ShowGrades(Student student, List<Grade> grades) {
         Console.Clear();
-        Console.WriteLine($"Student: {Student}");
-        if (Grades.Count != 0 || Grades == null) Console.WriteLine($"\n[{Grades[0].GradeType}]");
-        else Console.WriteLine($"\nNo grades");
+        Console.WriteLine($"Student: {student}");
+        if (grades.Count != 0 || grades == null) Console.WriteLine($"\n[{grades[0].GradeType}]");
+        else Console.WriteLine($"\nBrak ocen");
 
         List<string> menuOptions = new List<string>();
 
-        foreach(Grade grade in Grades) {
+        foreach(Grade grade in grades) {
             menuOptions.Add($"[<{(int)grade.GradeWeight}> - '{grade.Exercise}']");
         }
 
         int option = PrintMenu(
-            new [] {"Back"}
+            new [] {"Wróć"}
                 .Concat(menuOptions)
-                .Append("Add grade")
+                .Append("Dodaj ocenę")
                 .ToArray()
         );
 
-        int lastOption = Grades.Count+1;
+        int lastOption = grades.Count+1;
         
         if (option == 0) return;
-        else if (option == menuOptions.Count+1) AddGrade(Student);
-        else EditGrade(Grades[option-1]);
+        else if (option == menuOptions.Count+1) AddGrade(student);
+        else EditGrade(grades[option-1]);
     }
 
-    private void EditGrade(Grade Grade) {
+    private void EditGrade(Grade grade) {
         Console.Clear();
-        Console.WriteLine(Grade);
+        Console.WriteLine(grade);
 
-        Console.Write($"\n'{Grade.Exercise}', press enter to skip or edit exercise name: ");
+        Console.Write($"\n'{grade.Exercise}', wprowadź nowy opis zadania lub enter by pominąć: ");
         string newExercise = Console.ReadLine() ?? "";
         
-        Console.Write($"\n'{Grade.GradeType}', press enter to skip or choose course type:");
+        Console.Write($"\n'{grade.GradeType}', wybierz kategorię lub enter by pominąć: ");
 
         GradeType[] types = Enum.GetValues<GradeType>();
         for (int i = 0; i < types.Length; i++) Console.Write($"\n{i+1}. {types[i]}");
@@ -116,55 +116,56 @@ public class UI {
         int newType = int.Parse(newTypeInput);
         
         while (true) {
-            Console.Write($"New exercise name: '{newExercise}'. New type: {types[newType-1]}");
-            Console.Write("\nConfirm? y/n: ");
+            Console.Write($"Zmieniono opis: '{newExercise}'. Zmieniono kategorię: {types[newType-1]}");
+            Console.Write("\nZatwierdzić? t/n: ");
             string confirm = Console.ReadLine() ?? "";
 
             switch(confirm) {
-                case "y":
+                case "t":
                     if (newType >= 1 && newType <= types.Length) {
-                        Grade.GradeType = types[newType-1];
+                        grade.GradeType = types[newType-1];
                     }
 
-                    if (newExercise != "") Grade.Exercise = newExercise;
+                    if (newExercise != "") grade.Exercise = newExercise;
                 return;
                 
                 case "n": return;
                 
-                default: Console.Write("\nInvalid option\n"); break;
+                default: Console.Write("\nNieprawidłowy wybór\n"); break;
             }
         }
     }
 
-    private void AddGrade(Student Student) {
+    private void AddGrade(Student student) {
         Console.Clear();
-        Console.WriteLine($"Add grade for: {Student}");
+        Console.WriteLine($"Dodaj ocenę dla: {student}");
         while (true) {
-            Console.Write("\nInsert subject: ");
+            Console.Write("\nWprowadź nazwę przedmiotu: ");
             string subject = Console.ReadLine() ?? "";
-
             
             GradeType[] types = Enum.GetValues<GradeType>();
             for (int i = 0; i<types.Length; i++) Console.Write($"\n{i+1}. {types[i]}");
-            Console.Write("\nInsert type: ");
+            Console.Write("\nWprowadź kategorię: ");
             int gradeType = int.Parse(Console.ReadLine() ?? "");
 
-            Console.Write("\nInsert exercise: ");
+            Console.Write("\nWprowadź opis: ");
             string exercise = Console.ReadLine() ?? "";
 
             GradeWeight[] weights = Enum.GetValues<GradeWeight>();
             for (int i = 0; i<weights.Length; i++) Console.Write($"\n{i+1}. {weights[i]}({(int)weights[i]})");
-            Console.Write("\nInsert weight: ");
+            Console.Write("\nWprowadź ocenę (2-5): ");
             int gradeWeight = int.Parse(Console.ReadLine() ?? "");
 
-            Grade Grade = new Grade(Student, subject, exercise, types[gradeType-1], weights[gradeWeight-1]);
-            Console.Write($"\n{Grade}");
-            Console.Write($"\nAdd grade? y/n: ");
+            Grade grade = new Grade(student, subject, exercise, types[gradeType-1], weights[gradeWeight-1]);
+            Console.Write($"\n{grade}");
+            Console.Write($"\nDodać ocenę? t/n: ");
             string confirm = Console.ReadLine() ?? "";
-            if (confirm == "y") {
-                Student.Grades.Add(Grade);
+            
+            if (confirm == "t") {
+                StudentService.AddGrade(student, grade);
                 return;
             }
+
             else if (confirm == "n") return;
         }
     }
@@ -175,10 +176,10 @@ public class UI {
         }
 
         while (true) {
-            Console.Write("\nSelect: ");
+            Console.Write("\nWybierz: ");
             int input = int.Parse(Console.ReadLine() ?? "");
             if (input >= 0 && input < options.Length) return input;
-            else Console.WriteLine("Invalid option");
+            else Console.WriteLine("Nieprawidłowy wybór");
         }
     }
 }
