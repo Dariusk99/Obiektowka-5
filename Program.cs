@@ -1,8 +1,8 @@
 ﻿class Program {
     static void Main(string[] args) {
         //Setup
-        Student s1 = new Student(1, "Dariusz", "Malina");
-        Student s2 = new Student(2, "Jerzy", "Jeżyna");
+        Student s1 = new Student(1, "Dariusz", "Malina", "dariuszmalina@student.pl", 123456789);
+        Student s2 = new Student(2, "Jerzy", "Jeżyna", "jerzyjezyna@student.pl", 005830102);
 
         Course course = new Course("Matematyka");
         course.Students.Add(s1);
@@ -11,8 +11,11 @@
         Teacher teacher = new Teacher("Andrzej", "Kowalski");
         teacher.Courses.Add(course);
 
-        teacher.GradeAdded += OnGradeAdded;
-        teacher.GradeAdded += OnGradeAddedSendEmail;
+        EmailNotifier emailNotifier = new EmailNotifier();
+        // SMSNotifier smsNotifier = new SMSNotifier();
+
+        // teacher.GradeAdded += smsNotifier.OnGradeAdded;
+        teacher.GradeAdded += emailNotifier.OnGradeAdded;
 
         while (true) {
             Console.WriteLine("--- PANEL NAUCZYCIELA ---");
@@ -60,7 +63,11 @@
                     if (existsStudent != null) {
                         Console.Write("Podaj ocenę: ");
                         double grade = double.Parse(Console.ReadLine());
-                        teacher.AddGrade(existsStudent, grade);
+                        Console.Write("Wybierz typ: ");
+                        Console.Write("1. Ocena z wykładu: ");
+                        Console.Write("2. Ocena z ćwiczeń: ");
+                        int gradeType = int.Parse(Console.ReadLine());
+                        teacher.AddGrade(existsStudent, grade, gradeType);
                     }
                     else
                         Console.WriteLine("Nie znaleziono studenta");
@@ -74,13 +81,5 @@
                     break;
             }
         }
-    }
-
-    static void OnGradeAdded(object sender, GradeAddedEventArgs e) {
-        Console.WriteLine($"\nEvent1: Dodano ocenę {e.Grade} studentowi: {e.Student.Name} {e.Student.Surname}");
-    }
-
-    static void OnGradeAddedSendEmail(object sender, GradeAddedEventArgs e) {
-        Console.WriteLine($"Event2: Wysłano powiadomienie email do Studenta {e.Student.Name} {e.Student.Surname}: Dodano ocenę {e.Grade}");
     }
 }

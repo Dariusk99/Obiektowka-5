@@ -30,8 +30,9 @@ public class Teacher {
         }
     }
 
-    public void AddGrade(Student student, double grade) {
-        student.Grades.Add(grade);
+    public void AddGrade(Student student, double grade, int type) {
+        if (type == 1) student.LecturePoints.Add(grade);
+        if (type == 2) student.ExercisePoints.Add(grade);
         GradeAdded?.Invoke(this, new GradeAddedEventArgs(student, grade));
     }
 }
