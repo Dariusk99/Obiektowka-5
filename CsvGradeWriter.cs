@@ -6,15 +6,12 @@ public class CsvGradeWriter {
     }
 
     public void OnGradeAdded(object sender, GradeAddedEventArgs e) {
-        double finalGrade = (e.LecturePoints + e.ExercisePoints) / 0.5;
 
         string newLine = 
             $"{e.Student.Id};" +
             $"{e.Student.Name};" +
             $"{e.Student.Surname};" +
-            $"{e.LecturePoints};" +
-            $"{e.ExercisePoints};" +
-            $"{finalGrade};";
+            $"{e.Grade};";
 
         File.AppendAllText(FilePath, newLine + Environment.NewLine);
     }

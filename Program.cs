@@ -1,8 +1,8 @@
 ﻿class Program {
     static void Main(string[] args) {
         //Setup
-        Student s1 = new Student(1, "Dariusz", "Malina", "dariuszmalina@student.pl", 123456789);
-        Student s2 = new Student(2, "Jerzy", "Jeżyna", "jerzyjezyna@student.pl", 005830102);
+        Student s1 = new Student(1, "Dariusz", "Malina");
+        Student s2 = new Student(2, "Jerzy", "Jeżyna");
 
         Course course = new Course("Matematyka");
         course.Students.Add(s1);
@@ -11,11 +11,11 @@
         Teacher teacher = new Teacher("Andrzej", "Kowalski");
         teacher.Courses.Add(course);
 
-        EmailNotifier emailNotifier = new EmailNotifier();
-        // SMSNotifier smsNotifier = new SMSNotifier();
+        GradeCalculator gradeCalculator = new GradeCalculator();
+        CsvGradeWriter csvGradeWriter = new CsvGradeWriter("grades.csv");
 
-        // teacher.GradeAdded += smsNotifier.OnGradeAdded;
-        teacher.GradeAdded += emailNotifier.OnGradeAdded;
+        teacher.GradeAdded += csvGradeWriter.OnGradeAdded;
+        teacher.GradeAdded += gradeCalculator.OnGradeAdded;
 
         while (true) {
             Console.WriteLine("--- PANEL NAUCZYCIELA ---");
@@ -61,8 +61,23 @@
                         .FirstOrDefault(s => s.Id == studentId);
                     
                     if (existsStudent != null) {
-                        Console.Write("Podaj ocenę: ");
-                        double grade = double.Parse(Console.ReadLine());
+                        double grade;
+                        while (true)
+                        {
+                            Console.Write("Podaj ocenę (2-5): ");
+                            if (!double.TryParse(Console.ReadLine(), out grade))
+                            {
+                                Console.WriteLine("Błąd: wpisz liczbę.");
+                                continue;
+                            }
+
+                            if (grade < 2 || grade > 5)
+                            {
+                                Console.WriteLine("Błąd: ocena musi być w zakresie 2-5.");
+                                continue;
+                            }
+                            break;
+                        }
                         Console.Write("Wybierz typ: ");
                         Console.Write("1. Ocena z wykładu: ");
                         Console.Write("2. Ocena z ćwiczeń: ");
